@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<div class="card border-primary mb-3 shadow p-3 mb-5 bg-white rounded" style="width: 80%;">
+    <div class="card-header"><h2><span class="badge badge-secondary">{{data.id}}</span> {{ data.title }}</h2>
+        <!-- <div class="btn-group float-right"> -->
+            <button type="button" class="btn btn-secondary dropdown-toggle float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions
+            </button>
+            {% if data.status == "NEW" %}
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/edit_ticket/{{data.id}}/">Edit</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/assign_ticket/{{data.id}}">Assign Ticket to you</a>
+              <a class="dropdown-item" href="/invalid_ticket/{{data.id}}/">Mark Ticket invalid</a>
+            </div>
+            {% endif %}
+            {% if data.status == "IN PROGRESS" %}
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/edit_ticket/{{data.id}}/">Edit</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/complete_ticket/{{data.id}}/">Complete Ticket</a>
+              <a class="dropdown-item" href="/return_ticket/{{data.id}}/">Return Ticket</a>
+            </div>
+            {% endif %}
+            {% if data.status == "DONE" %}
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/reopen_ticket/{{data.id}}/">Reopen Ticket</a>
+            </div>
+            {% endif %}
+          <!-- </div> -->
+    </div>
+    <div class="card-body text-secondary">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card border-primary mb-3 shadow p-3 mb-5 bg-white rounded" style="width: 100%;">
+                    <div class="card-header">Info</div>
+                    <div class="card-body text-secondary">
+                        Status: {{ data.status }}<br/>
+                        Submitted on: {{ data.created }} <br/>
+                        Reported By:<a href="/user_view/{{data.filed_by.id}}/"> {{ data.filed_by.username }}</a><br/>
+                        {% if data.assigned_to %}
+                        Assinged To: <a href="/user_view/{{data.assigned_to.id}}/">{{ data.assigned_to }}</a><br/>
+                        {% endif %}
+                        {% if data.completed_by %}
+                        Completed By: <a href="/user_view/{{data.completed_by.id}}/">{{ data.completed_by }}</a><br/>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card border-primary mb-3 shadow p-3 mb-5 bg-white rounded" style="width: 100%;">
+                    <div class="card-header">Description</div>
+                    <div class="card-body text-secondary">
+                        {{ data.description }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock%}

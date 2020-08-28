@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="card border-primary mb-3 shadow p-3 mb-5 bg-white rounded" style="width: 80%;">
+        <div class="card-header float-center"><h2>{{ heading }}</h2></div>
+        <div class="card-body text-secondary">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
